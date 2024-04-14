@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foo1
+  labels:
+    app.kubernetes.io/name: foo1
+spec:
+  containers:
+    - name: ubuntu1
+      image: lephuclai/ubuntu_iperf
+      command: [ "/bin/bash", "-c", "--" ]
+      args: [ "while true; do sleep 30; done;" ]
+      ports:
+        - containerPort: 5201
+  nodeName: minikube
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: foo1-service
+spec:
+  selector:
+    app.kubernetes.io/name: foo1
+  ports:
+  - protocol: TCP
+    port: 5201
